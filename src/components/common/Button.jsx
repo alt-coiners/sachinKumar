@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
+const MotionLink = motion.create(Link);
 
 const variants = {
   primary:
@@ -16,6 +19,10 @@ const sizes = {
   md: 'px-6 py-3 text-sm',
   lg: 'px-8 py-3.5 text-base',
 };
+
+function isExternalHref(href) {
+  return /^(https?:|mailto:|tel:)/i.test(href);
+}
 
 export default function Button({
   children,
@@ -38,18 +45,31 @@ export default function Button({
   );
 
   if (href) {
-    const isExternal = href.startsWith('http');
+    if (isExternalHref(href)) {
+      return (
+        <motion.a
+          href={href}
+          className={classes}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          {...props}
+        >
+          {content}
+        </motion.a>
+      );
+    }
+
     return (
-      <motion.a
-        href={href}
+      <MotionLink
+        to={href}
         className={classes}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         {...props}
       >
         {content}
-      </motion.a>
+      </MotionLink>
     );
   }
 
