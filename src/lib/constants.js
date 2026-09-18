@@ -25,6 +25,8 @@ export const SITE = {
   telegramHandle: '@advertiser247',
   telegramUrl: 'https://t.me/advertiser247',
   telegramTradeUrl: 'https://t.me/advertiser247',
+  /** Set VITE_AFFILIATE_JOIN_URL to the Next affiliate app (e.g. https://app.100xbull.com/join). */
+  affiliateJoinUrl: import.meta.env.VITE_AFFILIATE_JOIN_URL || '',
 };
 
 export const fadeUp = {
